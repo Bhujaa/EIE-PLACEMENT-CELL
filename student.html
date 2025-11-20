@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - EIE Placement Cell</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <a href="index.html"><h1>EIE Placement Cell</h1></a>
+            </div>
+            <div class="nav-links">
+                <span id="studentName">Student</span>
+                <button onclick="logout()" class="btn btn-small">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="showTab('profile')">Profile</button>
+                <button class="tab-btn" onclick="showTab('jobs')">Available Jobs</button>
+                <button class="tab-btn" onclick="showTab('applications')">My Applications</button>
+            </div>
+
+            <div id="profileTab" class="tab-content active">
+                <div class="card">
+                    <h3>My Profile</h3>
+                    <form id="profileForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="rollNo">Roll Number:</label>
+                                <input type="text" id="rollNo" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cgpa">CGPA:</label>
+                                <input type="number" id="cgpa" step="0.01" min="0" max="10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tenthMark">10th Mark (%):</label>
+                                <input type="number" id="tenthMark" min="0" max="100" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="twelfthMark">12th Mark (%):</label>
+                                <input type="number" id="twelfthMark" min="0" max="100" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="placementStatus">Placement Status:</label>
+                                <input type="text" id="placementStatus" readonly>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="jobsTab" class="tab-content">
+                <div class="card">
+                    <h3>Available Jobs</h3>
+                    <div id="jobsList" class="jobs-list"></div>
+                </div>
+            </div>
+
+            <div id="applicationsTab" class="tab-content">
+                <div class="card">
+                    <h3>My Applications</h3>
+                    <div id="applicationsList" class="applications-list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/students-data.js"></script>
+    <script src="js/companies-data.js"></script>
+    <script src="js/alumni-data.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Initialize jobs data immediately
+        window.addEventListener('load', () => {
+            console.log('Companies data available:', window.companiesData ? window.companiesData.length : 0);
+            if (window.companiesData && window.companiesData.length > 0) {
+                window.sharedJobs = [...window.companiesData];
+                console.log('Initialized sharedJobs:', window.sharedJobs.length);
+            } else {
+                console.log('No companies data found, will use fallback');
+            }
+        });
+    </script>
+    <script src="js/student.js"></script>
+</body>
+</html>

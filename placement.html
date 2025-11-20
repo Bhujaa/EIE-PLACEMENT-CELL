@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Cell - EIE Placement Cell</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <a href="index.html"><h1>EIE Placement Cell</h1></a>
+            </div>
+            <div class="nav-links">
+                <a href="role.html">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="placement-section">
+        <div class="container">
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="showTab('alumni')">Alumni Placements</button>
+                <button class="tab-btn" onclick="showTab('current')">Current Batch</button>
+                <button class="tab-btn" onclick="showTab('reports')">Placement Reports</button>
+                <button class="tab-btn" onclick="showTab('stats')">Statistics</button>
+                <button class="tab-btn" onclick="showTab('experiences')">Interview Experiences</button>
+            </div>
+
+            <div id="alumniTab" class="tab-content active">
+                <div class="card">
+                    <h3>Alumni Placement Details</h3>
+                    <div id="alumniList" class="alumni-list"></div>
+                </div>
+            </div>
+
+            <div id="currentTab" class="tab-content">
+                <div class="card">
+                    <h3>Current Batch Placements</h3>
+                    <div id="currentStudentsList" class="current-students-list"></div>
+                </div>
+            </div>
+
+            <div id="reportsTab" class="tab-content">
+                <div class="card">
+                    <h3>Department Placement Report</h3>
+                    <div class="report-summary">
+                        <div class="stat-card">
+                            <h4 id="placedCount">0</h4>
+                            <p>Total</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4 id="companiesCount">0</h4>
+                            <p>Companies Visited</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4 id="placementRate">0%</h4>
+                            <p>Placement Rate</p>
+                        </div>
+                    </div>
+                    <div id="companyStats" class="company-stats"></div>
+                </div>
+            </div>
+
+            <div id="statsTab" class="tab-content">
+                <div class="card">
+                    <h3>Comprehensive Placement Statistics</h3>
+                    <div id="statsContent" class="stats-content"></div>
+                </div>
+            </div>
+
+            <div id="experiencesTab" class="tab-content">
+                <div class="card">
+                    <h3>Senior Interview Experiences & Resume Tips</h3>
+                    <div id="experiencesContent" class="experiences-content"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/students-data.js"></script>
+    <script src="js/companies-data.js"></script>
+    <script src="js/alumni-data.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Force initialize data immediately
+        window.addEventListener('load', () => {
+            console.log('Page loaded, forcing data initialization');
+            console.log('Alumni data check:', window.alumniData ? window.alumniData.length : 'Not found');
+            console.log('Students data check:', window.studentsData ? window.studentsData.length : 'Not found');
+            
+            // Ensure data is available
+            if (typeof alumniData !== 'undefined') {
+                window.alumniData = alumniData;
+            }
+            if (typeof studentsData !== 'undefined') {
+                window.studentsData = studentsData;
+            }
+            
+            // Force call the functions directly
+            setTimeout(() => {
+                if (typeof loadAlumniData === 'function') {
+                    loadAlumniData();
+                }
+                if (typeof loadCurrentStudents === 'function') {
+                    loadCurrentStudents();
+                }
+                if (typeof loadPlacementReport === 'function') {
+                    loadPlacementReport();
+                }
+                if (typeof loadInterviewExperiences === 'function') {
+                    loadInterviewExperiences();
+                }
+            }, 200);
+        });
+    </script>
+    <script src="js/placement.js"></script>
+</body>
+</html>

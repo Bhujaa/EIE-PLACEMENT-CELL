@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - EIE Placement Cell</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <a href="index.html"><h1>EIE Placement Cell</h1></a>
+            </div>
+            <div class="nav-links">
+                <span id="facultyName">Faculty</span>
+                <button onclick="logout()" class="btn btn-small">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="showTab('students')">Students</button>
+                <button class="tab-btn" onclick="showTab('jobs')">Job Postings</button>
+                <button class="tab-btn" onclick="showTab('applications')">Applications</button>
+            </div>
+
+            <div id="studentsTab" class="tab-content active">
+                <div class="card">
+                    <h3>Student Details</h3>
+                    <div id="studentsList" class="students-list"></div>
+                </div>
+            </div>
+
+            <div id="jobsTab" class="tab-content">
+                <div class="card">
+                    <h3>Job Postings</h3>
+                    <button onclick="showJobForm()" class="btn btn-primary mb-3">Post New Job</button>
+                    
+                    <div id="jobForm" class="job-form hidden">
+                        <h4>Post New Job</h4>
+                        <form id="newJobForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="company">Company:</label>
+                                    <input type="text" id="company" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="role">Role:</label>
+                                    <input type="text" id="role" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="salary">Salary (LPA):</label>
+                                    <input type="number" id="salary" step="0.1" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastDate">Last Date:</label>
+                                    <input type="date" id="lastDate" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="minCgpa">Min CGPA:</label>
+                                    <input type="number" id="minCgpa" step="0.01" min="0" max="10" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="minTenth">Min 10th (%):</label>
+                                    <input type="number" id="minTenth" min="0" max="100" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="minTwelfth">Min 12th (%):</label>
+                                    <input type="number" id="minTwelfth" min="0" max="100" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea id="description" rows="3" required></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Post Job</button>
+                                <button type="button" onclick="hideJobForm()" class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div id="jobsList" class="jobs-list"></div>
+                </div>
+            </div>
+
+            <div id="applicationsTab" class="tab-content">
+                <div class="card">
+                    <h3>Job Applications</h3>
+                    <div id="applicationsList" class="applications-list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/students-data.js"></script>
+    <script src="js/companies-data.js"></script>
+    <script src="js/alumni-data.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Initialize faculty data
+        window.addEventListener('load', () => {
+            // Ensure students data is available globally
+            if (!window.studentsData && typeof studentsData !== 'undefined') {
+                window.studentsData = studentsData;
+            }
+            
+            // Initialize jobs data
+            if (window.companiesData) {
+                window.sharedJobs = [...window.companiesData];
+            }
+            
+            // Initialize applications with proper student references
+            if (!window.sharedApplications) {
+                const applications = [];
+                const companies = ['TCS', 'Infosys', 'Microsoft', 'Google', 'Amazon', 'Wipro', 'Accenture', 'IBM', 'Cognizant', 'HCL Technologies', 'Capgemini', 'Oracle', 'Salesforce', 'Adobe', 'Uber', 'Flipkart', 'Paytm', 'Swiggy', 'Zomato', 'Netflix'];
+                const statuses = ['pending', 'accepted', 'rejected'];
+                const dates = ['2024-01-15', '2024-01-18', '2024-01-22', '2024-01-25', '2024-01-28', '2024-02-01', '2024-02-03', '2024-02-05', '2024-02-08', '2024-02-10', '2024-02-12', '2024-02-14', '2024-02-16', '2024-02-18', '2024-02-20', '2024-02-22', '2024-02-24', '2024-02-26', '2024-02-28', '2024-03-01'];
+                
+                // Create 50 applications with multiple students per company
+                for (let i = 0; i < 50 && studentsData && i < studentsData.length; i++) {
+                    applications.push({
+                        id: i + 1,
+                        studentEmail: studentsData[i].email,
+                        studentName: studentsData[i].name,
+                        jobId: companies[i % companies.length], // Cycle through companies
+                        status: statuses[i % 3],
+                        appliedDate: dates[i % dates.length],
+                        student: studentsData[i]
+                    });
+                }
+                window.sharedApplications = applications;
+            }
+        });
+    </script>
+    <script src="js/faculty.js"></script>
+</body>
+</html>

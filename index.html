@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EIE Placement Cell Management System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>EIE Placement Cell</h1>
+            </div>
+            <div class="nav-links">
+                <a href="role.html">Login</a>
+                <a href="placement.html">Placement Cell</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h2>Welcome to EIE Placement Cell Management System</h2>
+            <p>Your gateway to career opportunities and placement management</p>
+            <div class="hero-buttons">
+                <a href="role.html" class="btn btn-primary">Get Started</a>
+                <a href="placement.html" class="btn btn-secondary">View Placements</a>
+            </div>
+        </div>
+    </main>
+
+    <section class="features">
+        <div class="container">
+            <h3>Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Student Portal</h4>
+                    <p>Manage profile, view jobs, and track applications</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Faculty Portal</h4>
+                    <p>Post jobs, manage applications, and track placements</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Placement Statistics</h4>
+                    <p>View department placement reports and alumni data</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/students-data.js"></script>
+    <script src="js/companies-data.js"></script>
+    <script src="js/companies-data.js"></script>
+    <script src="js/companies-data.js"></script>
+    <script src="js/alumni-data.js"></script>
+    <script src="js/db.js"></script>
+    <script>
+        // Initialize database on page load
+        window.addEventListener('load', async () => {
+            await initDB();
+        });
+    </script>
+</body>
+</html>

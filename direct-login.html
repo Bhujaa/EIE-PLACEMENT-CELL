@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Direct Access</h2>
+            <div style="margin: 20px 0;">
+                <button onclick="goToStudent()" class="btn btn-primary" style="width: 100%; margin: 10px 0;">Student Dashboard</button>
+                <button onclick="goToFaculty()" class="btn btn-secondary" style="width: 100%; margin: 10px 0;">Faculty Dashboard</button>
+                <button onclick="goToPlacement()" class="btn" style="width: 100%; margin: 10px 0; background: #27ae60; color: white;">Placement Cell</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToStudent() {
+            localStorage.setItem('session', JSON.stringify({
+                id: 1, email: 'student@test.com', name: 'Test Student', role: 'student'
+            }));
+            window.location.href = 'student.html';
+        }
+
+        function goToFaculty() {
+            localStorage.setItem('session', JSON.stringify({
+                id: 1, email: 'faculty@test.com', name: 'Test Faculty', role: 'faculty'
+            }));
+            window.location.href = 'faculty.html';
+        }
+
+        function goToPlacement() {
+            window.location.href = 'placement.html';
+        }
+    </script>
+</body>
+</html>
